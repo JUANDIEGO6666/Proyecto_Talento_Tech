@@ -20,8 +20,8 @@ envpro\scripts\activate
 manejo de git
 git init
 git add .
-git commit -m "introdución a pandas 5%"
+git commit -m "proyecto %"
 si sale error 
-  git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
+  git config --global user.email "jugonzalezle@unal.edu.co"
+  git config --global user.name "JUANDIEGO6666"
 '''
