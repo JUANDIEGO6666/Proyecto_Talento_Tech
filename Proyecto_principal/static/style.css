@@ -1,0 +1,117 @@
+/* Fuente base y reset ligero */
+* { box-sizing: border-box; }
+html, body { 
+  margin: 0; 
+  padding: 0; 
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue"; 
+  color: #0b1221; 
+}
+
+/* Fondo degradado */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #051937 0%, #004d7a 40%, #00bfbc 100%);
+}
+
+/* Animación fade-in */
+.fade-in { animation: fadeIn 700ms ease-in-out; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Títulos */
+h1 {
+  color: #e9f3ff;
+  letter-spacing: 0.4px;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+.subtitle {
+  color: #d2e6ff;
+  margin: 0 0 24px 0;
+}
+
+/* Tarjeta del formulario / resultado */
+.card {
+  width: 100%;
+  max-width: 820px;
+  background: rgba(255,255,255,0.96);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(3, 17, 38, 0.35);
+  padding: 24px;
+}
+
+/* Grid de campos */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 820px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Campos de formulario */
+.field { display: flex; flex-direction: column; gap: 8px; }
+label { font-weight: 600; color: #0f2545; }
+select, input {
+  appearance: none;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d7e1ef;
+  background: #f7fbff;
+  outline: none;
+  transition: all 160ms ease;
+  font-size: 15px;
+}
+select:focus, input:focus {
+  border-color: #4aa3ff;
+  box-shadow: 0 0 0 4px rgba(74,163,255,0.18);
+  background: #ffffff;
+}
+
+/* Botones */
+.btn-primary, .btn-secondary {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  transition: transform 100ms ease, box-shadow 100ms ease, background 160ms ease, color 160ms ease;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-top: 18px;
+  background: #1976d2;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(25,118,210,0.35);
+}
+.btn-primary:hover { background: #155fa8; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.result { text-align: center; }
+.prediction { font-size: 20px; }
+
+.btn-secondary {
+  margin-top: 12px;
+  background: #ffffff;
+  color: #0b1221;
+  border: 1px solid #c5d7ee;
+}
+.btn-secondary:hover { background: #f2f7ff; }

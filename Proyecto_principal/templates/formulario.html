@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <title>Predicción de Población - Manizales</title>
+</head>
+<body class="fade-in">
+  <div class="container">
+    <h1>Predicción de Población</h1>
+    <p class="subtitle">Manizales · 1985–2035</p>
+    <form action="{{ url_for('predecir') }}" method="POST" class="card">
+      <div class="grid">
+        <div class="field">
+          <label for="ano">Año</label>
+          <select id="ano" name="ano" required>
+            {% for a in anos %}
+              <option value="{{ a }}">{{ a }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tipo_poblacion">Tipo de población</label>
+          <select id="tipo_poblacion" name="tipo_poblacion" required>
+            <option>Urbana</option>
+            <option>Rural</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="genero_pred">Género predominante</label>
+          <select id="genero_pred" name="genero_pred" required>
+            <option>Mujeres</option>
+            <option>Hombres</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="dep">Dependencia poblacional (%)</label>
+          <select id="dep" name="dep" required>
+            {% for p in porcentajes %}
+              <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="enve">Adultos mayores (%)</label>
+          <select id="enve" name="enve" required>
+            {% for p in porcentajes %}
+              <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="nin">Niñez (%)</label>
+          <select id="nin" name="nin" required>
+            {% for p in porcentajes %}
+              <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Predecir Población</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
