@@ -1,11 +1,11 @@
-# 🌎 Proyecto: Predicción de Población en Manizales (1985–2035)
+#  Proyecto: Predicción de Población en Manizales (1985–2035)
 
 Este proyecto es una aplicación web en **Flask** que permite predecir la población total de Manizales usando indicadores demográficos históricos.  
 El sistema se compone de **modelo de predicción**, **backend**, **interfaz web** y **estilos visuales**.
 
 ---
 
-## 🎨 Estilos: `static/style.css`
+##  Estilos: `static/style.css`
 
 El archivo `style.css` define la apariencia visual de la aplicación.  
 Sus características principales:
@@ -25,7 +25,7 @@ Sus características principales:
 
 ---
 
-## 📝 Formulario: `templates/formulario.html`
+##  Formulario: `templates/formulario.html`
 
 Es la página principal de la aplicación.  
 Aquí el usuario ingresa los datos necesarios para generar la predicción.
@@ -45,7 +45,7 @@ Al final, un gran botón azul: **“Predecir Población”**.
 
 ---
 
-## 📊 Resultado: `templates/resultado.html`
+##  Resultado: `templates/resultado.html`
 
 Después de enviar el formulario, el usuario llega a esta página.  
 Muestra:
@@ -67,32 +67,23 @@ El diseño mantiene la misma estética: tarjeta blanca centrada, texto claro y b
 5. Se muestra el **resultado** en pantalla.
 
 ---
-## CAMBIOS EN INDEX Y MODELO
-# 🛠️ Explicación de los Cambios en `modelo.py` y `index.py`
 
-Este documento describe de manera clara y humanizada los **cambios realizados** en los archivos principales del proyecto para asegurar que el **modelo de predicción** y la **aplicación web** funcionen de forma coherente con el dataset y el formulario.
+#  Cambios realizados en `modelo.py` y `index.py`
 
----
+## Cambios en `modelo.py`
 
-## 🔹 Cambios en `modelo.py`
+### Explicación general
+El archivo `modelo.py` originalmente cargaba el CSV y entrenaba un modelo con variables básicas como:
+- Año
+- Índice de dependencia
+- Índice de envejecimiento
+- Índice de infancia
 
-### 📍 Contexto
-El **CSV** que usamos contiene columnas como:
-- Población urbana
-- Población rural
-- Población total hombres
-- Población total mujeres
+Sin embargo, para hacer la predicción más precisa y coherente con el **formulario web**, se decidió **agregar dos nuevas variables** derivadas del dataset:
+- **Tipo de población** (urbana o rural)
+- **Género predominante** (mujeres o hombres)
 
-Pero el **formulario web** le pide al usuario datos más simples:
-- Tipo de población (Urbana / Rural)
-- Género predominante (Mujeres / Hombres)
-
-Si usábamos el CSV sin cambios, el formulario tendría campos que el modelo no entendería.
-
----
-
-### ✅ Solución
-Se **crearon nuevas variables binarias** a partir de la información del CSV:
+###  Código agregado
 
 ```python
 # Tipo de población (1 = urbana, 0 = rural)
@@ -106,3 +97,48 @@ if col_hom and col_muj:
     X["Género predominante mujeres"] = (df[col_muj] >= df[col_hom]).astype(int)
 else:
     X["Género predominante mujeres"] = 0
+```
+
+## Qué hace este código
+
+**Tipo población urbana** → compara las columnas Población urbana y Población rural del CSV.
+Si la urbana es mayor o igual → asigna 1.
+Si la rural es mayor → asigna 0.
+**Género predominante mujeres** → compara las columnas Población total mujeres y Población total hombres.
+Si las mujeres son mayoría → asigna 1.
+Si los hombres son mayoría → asigna 0.
+
+De esta forma, el modelo puede usar estos indicadores simplificados y entrenar con ellos.
+
+# Cambios en `index.py`
+### Explicación general
+
+El archivo index.py recibe los valores que el usuario elige en el formulario.
+Inicialmente manejaba solo las variables originales (año, dependencia, envejecimiento, infancia).
+
+Pero, como en el formulario se piden también Tipo de población y Género predominante, era necesario convertir esas respuestas de texto en las variables binarias que el modelo entrenó.
+
+## Código agregado
+"Tipo población urbana": 1 if tipo_poblacion == "Urbana" else 0,
+"Género predominante mujeres": 1 if genero_pred == "Mujeres" else 0,
+
+## Qué hace este código
+
+Si el usuario selecciona Urbana en el formulario → el valor será 1.
+Si selecciona Rural → el valor será 0.
+Si selecciona Mujeres → el valor será 1.
+Si selecciona Hombres → el valor será 0.
+
+Así, los datos del formulario coinciden exactamente con lo que espera el modelo entrenado.
+
+##  Conclusión
+
+Antes: el modelo y el backend trabajaban solo con las columnas originales del CSV.
+
+Ahora: se añadieron variables derivadas (tipo de población y género predominante) que hacen que la predicción sea más rica y que el formulario tenga un efecto real en los resultados.
+
+Gracias a estos cambios:
+El modelo.py entrena con más información.
+El index.py traduce las respuestas del usuario en los mismos términos que entiende el modelo.
+
+Esto garantiza que la aplicación sea más precisa, consistente y útil
