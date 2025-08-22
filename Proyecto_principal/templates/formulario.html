@@ -14,9 +14,9 @@
 
     <form action="{{ url_for('predecir') }}" method="POST" class="card">
       <div class="grid">
-        <!-- Año -->
+        <!-- Año obligatorio -->
         <div class="field">
-          <label for="Año">Año</label>
+          <label for="Año">Año *</label>
           <select id="Año" name="Año" required>
             {% for a in anos %}
               <option value="{{ a }}">{{ a }}</option>
@@ -24,27 +24,29 @@
           </select>
         </div>
 
-        <!-- Campos numéricos -->
+        <!-- Campos numéricos obligatorios (con *) -->
         {% for col in columnas if col not in ["Año","Tipo de población","Género predominante"] %}
         <div class="field">
-          <label for="{{ col }}">{{ col }}</label>
+          <label for="{{ col }}">{{ col }} *</label>
           <input type="number" id="{{ col }}" name="{{ col }}" step="any" required>
         </div>
         {% endfor %}
 
-        <!-- Tipo de población -->
+        <!-- Tipo de población (opcional, con opción en blanco) -->
         <div class="field">
           <label for="tipo_poblacion">Tipo de población</label>
           <select id="tipo_poblacion" name="tipo_poblacion">
+            <option value="">-- Seleccione --</option>
             <option>Urbana</option>
             <option>Rural</option>
           </select>
         </div>
 
-        <!-- Género predominante -->
+        <!-- Género predominante (opcional, con opción en blanco) -->
         <div class="field">
           <label for="genero_pred">Género predominante</label>
           <select id="genero_pred" name="genero_pred">
+            <option value="">-- Seleccione --</option>
             <option>Mujeres</option>
             <option>Hombres</option>
           </select>
@@ -52,9 +54,8 @@
       </div>
 
       <button type="submit" class="btn-primary">Predecir Población</button>
+      <p class="note">Las casillas marcadas con * son obligatorias.</p>
     </form>
   </div>
 </body>
 </html>
-
-
