@@ -11,57 +11,42 @@
   <div class="container">
     <h1>Predicción de Población</h1>
     <p class="subtitle">Manizales · 1985–2035</p>
+
     <form action="{{ url_for('predecir') }}" method="POST" class="card">
       <div class="grid">
+        <!-- Año -->
         <div class="field">
-          <label for="ano">Año</label>
-          <select id="ano" name="ano" required>
+          <label for="Año">Año</label>
+          <select id="Año" name="Año" required>
             {% for a in anos %}
               <option value="{{ a }}">{{ a }}</option>
             {% endfor %}
           </select>
         </div>
 
+        <!-- Campos numéricos -->
+        {% for col in columnas if col not in ["Año","Tipo de población","Género predominante"] %}
+        <div class="field">
+          <label for="{{ col }}">{{ col }}</label>
+          <input type="number" id="{{ col }}" name="{{ col }}" step="any" required>
+        </div>
+        {% endfor %}
+
+        <!-- Tipo de población -->
         <div class="field">
           <label for="tipo_poblacion">Tipo de población</label>
-          <select id="tipo_poblacion" name="tipo_poblacion" required>
+          <select id="tipo_poblacion" name="tipo_poblacion">
             <option>Urbana</option>
             <option>Rural</option>
           </select>
         </div>
 
+        <!-- Género predominante -->
         <div class="field">
           <label for="genero_pred">Género predominante</label>
-          <select id="genero_pred" name="genero_pred" required>
+          <select id="genero_pred" name="genero_pred">
             <option>Mujeres</option>
             <option>Hombres</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="dep">Dependencia poblacional (%)</label>
-          <select id="dep" name="dep" required>
-            {% for p in porcentajes %}
-              <option value="{{ p }}">{{ p }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="enve">Adultos mayores (%)</label>
-          <select id="enve" name="enve" required>
-            {% for p in porcentajes %}
-              <option value="{{ p }}">{{ p }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="nin">Niñez (%)</label>
-          <select id="nin" name="nin" required>
-            {% for p in porcentajes %}
-              <option value="{{ p }}">{{ p }}</option>
-            {% endfor %}
           </select>
         </div>
       </div>
